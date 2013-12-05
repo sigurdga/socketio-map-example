@@ -1,0 +1,23 @@
+{
+  "author": "sigurdga",
+  "name": "smartkart",
+  "description": "project",
+  "version": "0.0.1",
+  "homepage": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": "0.10"
+  },
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "express": "> 3.0",
+    "express-hbs": "",
+    "socket.io": ""
+  }
+}

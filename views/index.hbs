@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sample map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Strekmann">
+
+    <!-- Le styles -->
+    <link href='http://api.tiles.mapbox.com/mapbox.js/v1.5.0/mapbox.css' rel='stylesheet' />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <style>
+body { margin:0; padding:0; height: 100%}
+#map { position:absolute; top:0; bottom:0; width:100%; height: 100%}
+    </style>
+
+  </head>
+  <body>
+
+<div id="map"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src='http://api.tiles.mapbox.com/mapbox.js/v1.5.0/mapbox.js'></script>
+
+    <script>
+    var mapbox_key = 'sigurdga.gemd0c1b',
+        geoJson = [];
+
+    function addToGeoJson(markers) {
+        //console.log(markers);
+        $.each(markers, function (i, marker){
+            console.log(marker);
+            if (marker.type && marker.lat && marker.lon) {
+                geoJson.push({
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [marker.lon, marker.lat]
+                    },
+                    "properties": {
+                        "title": "Call",
+                        "icon": {
+                            "iconUrl": 'http://a.tiles.mapbox.com/v3/marker/pin-l-' + marker.type + '+f86767.png',
+                        }
+                    }
+                });
+            }
+        });
+      }
+      var map = L.mapbox.map('map', mapbox_key)
+      .setView([63.4315, 10.3992], 8);
+      $.ajax('/api/markers/', {
+          success: function (data) {
+              //console.log(data.markers);
+              addToGeoJson(data.markers);
+              map.markerLayer.setGeoJSON(geoJson);
+          }
+      });
+      map.markerLayer.on('layeradd', function (e) {
+          var marker = e.layer,
+          feature = marker.feature;
+          marker.setIcon(L.icon(feature.properties.icon));
+      });
+
+      var socket = io.connect('http://localhost:3000');
+
+      socket.on('call', function (data) {
+          //console.log(data.markers);
+          addToGeoJson(data.markers);
+          map.markerLayer.setGeoJSON(geoJson);
+      });
+
+    </script>
+  </body>
+</html>
