@@ -30,7 +30,9 @@ body { margin:0; padding:0; height: 100%}
     <script src='http://api.tiles.mapbox.com/mapbox.js/v1.5.0/mapbox.js'></script>
 
     <script>
-    var geoJson = [];
+    var mapbox_key = 'sigurdga.gemd0c1b',
+        geoJson = [];
+
     function addToGeoJson(markers) {
         //console.log(markers);
         $.each(markers, function (i, marker){
@@ -52,7 +54,7 @@ body { margin:0; padding:0; height: 100%}
             }
         });
       }
-      var map = L.mapbox.map('map', 'sigurdga.gemd0c1b')
+      var map = L.mapbox.map('map', mapbox_key)
       .setView([63.4315, 10.3992], 8);
       $.ajax('/api/markers/', {
           success: function (data) {

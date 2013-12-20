@@ -42,7 +42,7 @@ API-key
 
 This is meant as a small sample project that should work out of the box using
 as few commands as possible. So please change my Mapbox API key (and replace
-by your own key at line 24 in server.js) key before you change anything else.
+by your own key at line 33 in views/index.hbs) key before you change anything else.
 
 Getting your own API key is as easy as creating a new map at the [Mapbox
 website](https://www.mapbox.com/). After registering, the map is available,
