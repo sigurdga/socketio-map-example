@@ -4,6 +4,9 @@ socketio-map-example
 A small example showing how to update a [Mapbox](https://www.mapbox.com/) map
 using [Socket.io](http://socket.io/) on [Express](http://expressjs.com/).
 
+There is also an [Express.io](http://express-io.org/) branch if would prefer
+using that.
+
 Install
 -------
 
